@@ -17,18 +17,55 @@ redirect_from:
 
 <span class='anchor' id='about-me'></span>
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. Suspendisse condimentum, libero vel tempus mattis, risus risus vulputate libero, elementum fermentum mi neque vel nisl. Maecenas facilisis maximus dignissim. Curabitur mattis vulputate dui, tincidunt varius libero luctus eu. Mauris mauris nulla, scelerisque eget massa id, tincidunt congue felis. Sed convallis tempor ipsum rhoncus viverra. Pellentesque nulla orci, accumsan volutpat fringilla vitae, maximus sit amet tortor. Aliquam ultricies odio ut volutpat scelerisque. Donec nisl nisl, porttitor vitae pharetra quis, fringilla sed mi. Fusce pretium dolor ut aliquam consequat. Cras volutpat, tellus accumsan mattis molestie, nisl lacus tempus massa, nec malesuada tortor leo vel quam. Aliquam vel ex consectetur, vehicula leo nec, efficitur eros. Donec convallis non urna quis feugiat.
+I am a PhD candidate in the Department of Geography at the University of Colorado Boulder, advised by <a href='https://www.colorado.edu/geography/guofeng-cao'>Dr. Guofeng Cao</a> at <a href="https://www.spatstat.com/">Spatiotemporal Pattern Analysis & Research Laboratory (STARlab)</a>.
 
-My research interest includes neural machine translation and computer vision. I have published more than 100 papers at the top international AI conferences with total <a href='https://scholar.google.com/citations?user=DhtAFkwAAAAJ'>google scholar citations <strong><span id='total_cit'>260000+</span></strong></a> (You can also use google scholar badge <a href='https://scholar.google.com/citations?user=DhtAFkwAAAAJ'><img src="https://img.shields.io/endpoint?url={{ url | url_encode }}&logo=Google%20Scholar&labelColor=f6f6f6&color=9cf&style=flat&label=citations"></a>).
+My research focuses on developing spatially-explicit deep learning (GeoAI) methods to support uncertainty-aware knowledge discovery and decision-making in geospatial applications. I am also interested in the applications of large language models (LLMs), pre-trained foundation models, and physics-informed machine learning in geospatial data analysis and modeling.
 
+I have a strong background in geospatial data analysis, machine learning, and remote sensing. I am passionate about advancing the field of GeoAI and contributing to the development of innovative solutions for geospatial challenges.
 
-# 🔥 News
+<!-- # 🔥 News
 - *2022.02*: &nbsp;🎉🎉 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
-- *2022.02*: &nbsp;🎉🎉 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
+- *2022.02*: &nbsp;🎉🎉 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.  -->
 
-# 📝 Publications 
+# 📖 Educations
 
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">CVPR 2016</div><img src='images/500x300.png' alt="sym" width="100%"></div></div>
+- *2025 - now*, PhD candidate, Department of Geography, University of Colorado Boulder
+- *2021 - 2025*, PhD student, Department of Geography, University of Colorado Boulder
+- *2020 - 2021*, PhD student, Department of Geosciences, Texas Tech University
+- *2016 - 2020*, Bachelor of Science in Geographic Information Science, Department of Resources and Environmental Sciences, Hubei University
+
+# 🎖 Honors and Awards
+- *2025* Jennifer Dinaburg Memorial Research Awards, Department of Geography, University of Colorado Boulder
+- *2020* Distinguished Graduate Student Fellowship, Texas Tech University
+- *2020* Top 10 Students, Hubei University
+- *2019* & *2018* Scientific Research Scholarship, Hubei University
+
+Travel Grants:
+- *2025* Geography Graduate Student Travel & Research Funds, Department of Geography, University of Colorado Boulder
+- *2024* ACM SIGSPATIAL 2024 Travel Grant, National Science Foundation
+- *2023* Graduate School Student Travel Grant, University of Colorado Boulder
+
+# 👨‍🏫 Teaching and Research Experiences
+
+## Research Assistant
+Department of Geography, University of Colorado Boulder
+- Fall 2021 - Fall 2023, Summer 2024, Summer 2025 (Advisor: Dr. Guofeng Cao)
+
+Department of Geosciences, Texas Tech University
+- Fall 2020 - Spring 2021 (Advisor: Dr. Guofeng Cao)
+
+## Teaching Assistant
+Department of Geography, University of Colorado Boulder
+- GEOG 4203: Geographic Information Science: Spatial Modeling (Fall 2025)
+- GEOG 4023/5023: Advanced Quantitative Methods (Spring 2024 and Spring 2025)
+- GEOG 3023: Statistics and Geographic Data (Fall 2024 and Spring 2026)
+
+# 📝 Publications
+(\* indicates corresponding author)
+
+## Peer-Reviewed Journal Articles
+
+<!-- <div class='paper-box'><div class='paper-box-image'><div><div class="badge">CVPR 2016</div><img src='images/500x300.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
 [Deep Residual Learning for Image Recognition](https://openaccess.thecvf.com/content_cvpr_2016/papers/He_Deep_Residual_Learning_CVPR_2016_paper.pdf)
@@ -36,23 +73,55 @@ My research interest includes neural machine translation and computer vision. I 
 **Kaiming He**, Xiangyu Zhang, Shaoqing Ren, Jian Sun
 
 [**Project**](https://scholar.google.com/citations?view_op=view_citation&hl=zh-CN&user=DhtAFkwAAAAJ&citation_for_view=DhtAFkwAAAAJ:ALROH1vI_8AC) <strong><span class='show_paper_citations' data='DhtAFkwAAAAJ:ALROH1vI_8AC'></span></strong>
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
+- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.
 </div>
-</div>
+</div> -->
 
-- [Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet](https://github.com), A, B, C, **CVPR 2020**
+- ***Li, G.\****, Yu, Z., and Cao, G., 2026. The Perception-Precision Trade-Off in GeoAI. (*Manuscript in Preparation*)
+- ***Li, G.*** and Cao, G.\*, 2026. Neural Kriging: a scalable deep probabilistic framework for uncertainty-aware spatial interpolation under data sparsity. (*Under Review*)
+- Wu, D.\*, Srygley, R., ***Li, G.***, and Cao, G., 2026. Modeling the spatiotemporal dynamics of Mormon crickets across western United States using Bayesian species distribution models. (*Under Review*) [\[Code\]](https://github.com/thestarlab/Bayesian_SDM_MC) \| [\[Website\]](https://www.spatstat.com/Bayesian_SDM_MC/MC.html)
+- ***Li, G.\**** and Cao, G., 2026. Bayesian Geospatial Downscaling with Deep Generative Models. (*In Revision*)
+- ***Li, G.*** and Cao, G.\*, 2025. Generative adversarial models for extreme geospatial downscaling. International Journal of Applied Earth Observation and Geoinformation, 139, p.104541. [\[JAG\]](https://www.sciencedirect.com/science/article/pii/S1569843225001888) \| [\[ArXiv\]](https://arxiv.org/abs/2402.14049) \| [\[Code\]](https://github.com/LiGuiye/LAG_Climate)
+- Huang, L.\*, Willis, M.J., ***Li, G.***, Lantz, T.C., Schaefer, K., Wig, E., Cao, G. and Tiampo, K.F., 2023. Identifying active retrogressive thaw slumps from ArcticDEM. ISPRS Journal of Photogrammetry and Remote Sensing, 205, pp.301-316. [\[ISPRS\]](https://www.sciencedirect.com/science/article/pii/S0924271623002836) \| [\[Code\]](https://github.com/yghlc/labelEarth)
 
-# 🎖 Honors and Awards
-- *2021.10* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
-- *2021.09* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
+## Conference Proceedings with Full Paper Review
+- ***Li, G.*** and Cao, G.\*, 2024, October. Neural process for uncertainty-aware geospatial modeling. In Proceedings of the 7th ACM SIGSPATIAL International Workshop on AI for Geographic Knowledge Discovery (pp. 106-109). [\[Paper\]](https://dl.acm.org/doi/abs/10.1145/3687123.3698294) \| [\[Code\]](https://github.com/LiGuiye/LBANP)
+- ***Li, G.*** and Cao, G.\*, 2024, October. Statistical downscaling of climate datasets with deep generative model and Bayesian inference. In Proceedings of the I-GUIDE Forum 2024: Convergence Science and Geospatial AI for Environmental Sustainability. [\[Paper\]](https://docs.lib.purdue.edu/iguide/2024/presentations/4/)
+- ***Li, G.\**** and Cao, G., 2023, September. Bayesian Super-Resolution of Geospatial Datasets with Deep Generative Models. Paper presented at the Geospatial Knowledge Graphs and GeoAI Workshop, GIScience 2023, Leeds, UK. [\[Paper\]](https://doi.org/10.17605/OSF.IO/H2AWQ)
 
-# 📖 Educations
-- *2019.06 - 2022.04 (now)*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
-- *2015.09 - 2019.06*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
+# 💬 Conference and Symposium Presentations
+(Presenter is in the first position.)
 
-# 💬 Invited Talks
-- *2021.06*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
-- *2021.03*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.  \| [\[video\]](https://github.com/)
+<!-- - *2021.06*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.
+- *2021.03*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.  \| [\[video\]](https://github.com/) -->
 
-# 💻 Internships
-- *2019.05 - 2020.02*, [Lorem](https://github.com/), China.
+- ***Li, G.***, Yu, Z., and Cao, G.: The Perception-Precision Trade-Off in GeoAI. AAG 2026. San Francisco, CA. March 2026
+- <b><i>Li, G.</i></b> and Cao, G.: GeoAI for small geospatial data. AAG 2026. San Francisco, CA. March 2026
+- Wu, D., Cao, G., Srygley, R. and <b><i>Li, G.</i></b>: High resolution mapping of Mormon cricket with a Bayesian spatiotemporal species distribution model. AGU 2025. New Orleans, LA. December 2025
+- Cao, G. and <b><i>Li, G.</i></b>: GeoAI for small geospatial data. AAG 2025. Detroit, MI. March 2025
+- Cao, G., Srygley, R., <b><i>Li, G.</i></b>, Wu, D. and Branson, D.: GeoAI for Grasshopper Outbreak Risk Mapping in the Western United States. AGU 2024. Washington, D.C. December 2024
+- <b><i>Li, G.</i></b> and Cao, G.: Neural process for uncertainty-aware geospatial modeling. ACM SIGSPATIAL 2024. Altanta, GA. October 2024
+- Cao, G. and <b><i>Li, G.</i></b>: Statistical Downscaling of Climate Datasets with Deep Generative Model and Bayesian inference. I-GUIDE Forum 2024. Jackson, Wyoming. October 2024
+- Cao, G. and <b><i>Li, G.</i></b>: Generative Adversarial Models for Extreme Downscaling of Geospatial Datasets. The 7th International Conference on Econometrics and Statistics (EcoSta 2024). Beijing Normal University, Beijing, China. July 2024
+- Cao, G. and <b><i>Li, G.</i></b>: Generative Adversarial Models for Extreme Super-Resolution of Climate Datasets. Evaluating the Science of Geospatial AI. Harvard University, Cambridge, MA. May 2024
+- <b><i>Li, G.</i></b> and Cao, G.: Bayesian Super-Resolution of Climate Datasets with Deep Generative Models. AAG 2024. Honolulu, HI. April 2024
+- Cao, G. and <b><i>Li, G.</i></b>: Uncertainty Modeling in GeoAI. AAG 2024. Honolulu, HI. April 2024
+- <b><i>Li, G.</i></b> and Cao, G.: Bayesian Super-Resolution of Geospatial Datasets with Deep Generative Models. Geospatial Knowledge Graphs and GeoAI Workshop, GIScience 2023. Leeds, UK. September 2023
+- <b><i>Li, G.</i></b> and Cao, G.: Generative Adversarial Models for Extreme Super-Resolution of Climate Datasets. AAG 2023. Denver, CO. March 2023
+- Cao, G. and <b><i>Li, G.</i></b>: A deep learning-based geostatistical framework for geospatial uncertainty modeling. AAG 2023. Denver, CO. March 2023
+
+# 🏆 Professional Services and Memberships
+
+Journal Reviewer for:
+- Geographical Analysis
+- Journal of Geophysical Research: Machine Learning and Computation
+- International journal of applied earth observation and geoinformation
+
+Professional Memberships:
+- Association of American Geographers (AAG)
+- Chinese Professional in Geographic Information Systems (CPGIS)
+- ACM Special Interest Group on Spatial Information (SIGSPATIAL)
+
+
+<!-- # 💻 Internships
+- *2019.05 - 2020.02*, [Lorem](https://github.com/), China. -->
