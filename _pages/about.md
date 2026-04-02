@@ -35,7 +35,7 @@ I have a strong background in geospatial data analysis, machine learning, and re
 - *2016 - 2020*, Bachelor of Science in Geographic Information Science, Department of Resources and Environmental Sciences, Hubei University
 
 # 🎖 Honors and Awards
-- *2025* Jennifer Dinaburg Memorial Research Awards, Department of Geography, University of Colorado Boulder
+- *2026* & *2025* Jennifer Dinaburg Memorial Research Awards, Department of Geography, University of Colorado Boulder
 - *2020* Distinguished Graduate Student Fellowship, Texas Tech University
 - *2020* Top 10 Students, Hubei University
 - *2019* & *2018* Scientific Research Scholarship, Hubei University
