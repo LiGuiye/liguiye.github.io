@@ -49,17 +49,6 @@ I have a strong background in geospatial data analysis, machine learning, and re
 - GEOG 4023/5023: Advanced Quantitative Methods (Spring 2024 and Spring 2025)
 - GEOG 3023: Statistics and Geographic Data (Fall 2024 and Spring 2026)
 
-# 🎖 Honors and Awards
-- *2026* & *2025* Jennifer Dinaburg Memorial Research Awards, Department of Geography, University of Colorado Boulder
-- *2020* Top 10 Students, Hubei University
-- *2019* & *2018* Scientific Research Scholarship, Hubei University
-
-# 💰 Fellowships & Grants
-- *2026* & *2023* Graduate School Student Travel Grant, University of Colorado Boulder
-- *2025* Geography Graduate Student Travel & Research Funds, Department of Geography, University of Colorado Boulder
-- *2024* ACM SIGSPATIAL 2024 Travel Grant, National Science Foundation
-- *2020* Distinguished Graduate Student Fellowship, Texas Tech University
-
 # 📝 Publications
 (\* indicates corresponding author)
 
@@ -85,13 +74,13 @@ Under Review / In Revision
 - ***Li, G.\**** and Cao, G., 2026. Bayesian Geospatial Downscaling with Deep Generative Models. (*In Revision*)
 
 Published / Accepted
-- ***Li, G.*** and Cao, G.\*, 2025. Generative adversarial models for extreme geospatial downscaling. International Journal of Applied Earth Observation and Geoinformation, 139, p.104541. [\[JAG\]](https://www.sciencedirect.com/science/article/pii/S1569843225001888) \| [\[ArXiv\]](https://arxiv.org/abs/2402.14049) \| [\[Code\]](https://github.com/LiGuiye/LAG_Climate)
-- Huang, L.\*, Willis, M.J., ***Li, G.***, Lantz, T.C., Schaefer, K., Wig, E., Cao, G. and Tiampo, K.F., 2023. Identifying active retrogressive thaw slumps from ArcticDEM. ISPRS Journal of Photogrammetry and Remote Sensing, 205, pp.301-316. [\[ISPRS\]](https://www.sciencedirect.com/science/article/pii/S0924271623002836) \| [\[Code\]](https://github.com/yghlc/labelEarth)
+- ***Li, G.*** and Cao, G.\*, 2025. Generative adversarial models for extreme geospatial downscaling. *International Journal of Applied Earth Observation and Geoinformation, 139*, p.104541. [\[JAG\]](https://www.sciencedirect.com/science/article/pii/S1569843225001888) \| [\[ArXiv\]](https://arxiv.org/abs/2402.14049) \| [\[Code\]](https://github.com/LiGuiye/LAG_Climate)
+- Huang, L.\*, Willis, M.J., ***Li, G.***, Lantz, T.C., Schaefer, K., Wig, E., Cao, G. and Tiampo, K.F., 2023. Identifying active retrogressive thaw slumps from ArcticDEM. *ISPRS Journal of Photogrammetry and Remote Sensing, 205*, pp.301-316. [\[ISPRS\]](https://www.sciencedirect.com/science/article/pii/S0924271623002836) \| [\[Code\]](https://github.com/yghlc/labelEarth)
 
 ## Conference Proceedings with Full Paper Review
-- ***Li, G.*** and Cao, G.\*, 2024, October. Neural Process for Uncertainty-Aware Geospatial Modeling. In Proceedings of the 7th ACM SIGSPATIAL International Workshop on AI for Geographic Knowledge Discovery (pp. 106-109). [\[Paper\]](https://dl.acm.org/doi/abs/10.1145/3687123.3698294) \| [\[Code\]](https://github.com/LiGuiye/LBANP)
-- ***Li, G.*** and Cao, G.\*, 2024, October. Statistical Downscaling of Climate Datasets with Deep Generative Model and Bayesian inference. In Proceedings of the I-GUIDE Forum 2024: Convergence Science and Geospatial AI for Environmental Sustainability. [\[Paper\]](https://docs.lib.purdue.edu/iguide/2024/presentations/4/)
-- ***Li, G.\**** and Cao, G., 2023, September. Bayesian Super-Resolution of Geospatial Datasets with Deep Generative Models. Paper presented at the Geospatial Knowledge Graphs and GeoAI Workshop, GIScience 2023, Leeds, UK. [\[Paper\]](https://doi.org/10.17605/OSF.IO/H2AWQ)
+- ***Li, G.*** and Cao, G.\*, 2024, October. Neural Process for Uncertainty-Aware Geospatial Modeling. In *Proceedings of the 7th ACM SIGSPATIAL International Workshop on AI for Geographic Knowledge Discovery* (pp. 106-109). [\[Paper\]](https://dl.acm.org/doi/abs/10.1145/3687123.3698294) \| [\[Code\]](https://github.com/LiGuiye/LBANP)
+- ***Li, G.*** and Cao, G.\*, 2024, October. Statistical Downscaling of Climate Datasets with Deep Generative Model and Bayesian inference. In *Proceedings of the I-GUIDE Forum 2024: Convergence Science and Geospatial AI for Environmental Sustainability*. [\[Paper\]](https://docs.lib.purdue.edu/iguide/2024/presentations/4/)
+- ***Li, G.\**** and Cao, G., 2023, September. Bayesian Super-Resolution of Geospatial Datasets with Deep Generative Models. Paper presented at the *Geospatial Knowledge Graphs and GeoAI Workshop, GIScience 2023*, Leeds, UK. [\[Paper\]](https://doi.org/10.17605/OSF.IO/H2AWQ)
 
 # 💬 Conference and Symposium Presentations
 (Presenter is in the first position.)
@@ -113,6 +102,17 @@ Published / Accepted
 - <b><i>Li, G.</i></b> and Cao, G.: Bayesian Super-Resolution of Geospatial Datasets with Deep Generative Models. Geospatial Knowledge Graphs and GeoAI Workshop, GIScience 2023. Leeds, UK. September 2023
 - <b><i>Li, G.</i></b> and Cao, G.: Generative Adversarial Models for Extreme Super-Resolution of Climate Datasets. AAG 2023. Denver, CO. March 2023
 - Cao, G. and <b><i>Li, G.</i></b>: A deep learning-based geostatistical framework for geospatial uncertainty modeling. AAG 2023. Denver, CO. March 2023
+
+# 🎖 Honors and Awards
+- *2026* & *2025* Jennifer Dinaburg Memorial Research Awards, Department of Geography, University of Colorado Boulder
+- *2020* Top 10 Students, Hubei University
+- *2019* & *2018* Scientific Research Scholarship, Hubei University
+
+# 💰 Fellowships and Grants
+- *2026* & *2023* Graduate School Student Travel Grant, University of Colorado Boulder
+- *2025* Geography Graduate Student Travel & Research Funds, Department of Geography, University of Colorado Boulder
+- *2024* ACM SIGSPATIAL 2024 Travel Grant, National Science Foundation
+- *2020* Distinguished Graduate Student Fellowship, Texas Tech University
 
 # 🏆 Professional Services and Memberships
 
