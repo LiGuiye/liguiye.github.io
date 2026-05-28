@@ -109,6 +109,7 @@ Published / Accepted
 - *2019* & *2018* Scientific Research Scholarship, Hubei University
 
 # 💰 Fellowships and Grants
+- *2026* Graduate School Dissertation Completion Fellowship, University of Colorado Boulder
 - *2026* & *2023* Graduate School Student Travel Grant, University of Colorado Boulder
 - *2025* Geography Graduate Student Travel & Research Funds, Department of Geography, University of Colorado Boulder
 - *2024* ACM SIGSPATIAL 2024 Travel Grant, National Science Foundation
