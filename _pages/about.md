@@ -37,7 +37,7 @@ I have a strong background in geospatial data analysis, machine learning, and re
 # 👨‍🏫 Teaching and Research Experiences
 
 **Research Assistant**, Department of Geography, University of Colorado Boulder
-- Fall 2021 - Fall 2023, Summer 2024, Summer 2025
+- Fall 2021 - Fall 2023, Summer 2024, Summer 2025, Summer 2026
 - Developed deep learning-based geostatistical models integrating neural networks with spatial statistical methods for uncertainty-aware geospatial modeling and climate data downscaling under the supervision of Dr. Guofeng Cao.
 
 **Research Assistant**, Department of Geosciences, Texas Tech University
@@ -69,11 +69,12 @@ In Preparation
 - ***Li, G.\****, Yu, Z., and Cao, G., 2026. The Perception-Precision Trade-Off in GeoAI. (*Manuscript in Preparation*)
 
 Under Review / In Revision
+- ***Li, G.\**** and Cao, G., 2026. Foundation Kriging: A Pretrained Spatial Prior for Zero-Shot Spatial Prediction. (*Under Review*)
 - ***Li, G.*** and Cao, G.\*, 2026. Neural Kriging: A Scalable Deep Probabilistic Framework for Uncertainty-Aware Spatial Interpolation Under Data Sparsity. (*Under Review*)
-- Wu, D.\*, Srygley, R., ***Li, G.***, and Cao, G., 2026. Modeling the spatiotemporal dynamics of Mormon crickets across western United States using Bayesian species distribution models. (*Under Review*) [\[Code\]](https://github.com/thestarlab/Bayesian_SDM_MC) \| [\[Website\]](https://www.spatstat.com/Bayesian_SDM_MC/MC.html)
 - ***Li, G.\**** and Cao, G., 2026. Bayesian Geospatial Downscaling with Deep Generative Models. (*In Revision*)
 
 Published / Accepted
+- Wu, D.\*, Srygley, R., ***Li, G.*** and Cao, G., 2026. Modeling the spatiotemporal dynamics of Mormon crickets across the western United States using Bayesian species distribution models. Ecological Informatics, p.103989. [\[Ecol. Inform.\]](https://www.sciencedirect.com/science/article/pii/S1574954126003961) \| [\[Code\]](https://github.com/thestarlab/Bayesian_SDM_MC) \| [\[Website\]](https://www.spatstat.com/GeoPest_Web/)
 - ***Li, G.*** and Cao, G.\*, 2025. Generative adversarial models for extreme geospatial downscaling. *International Journal of Applied Earth Observation and Geoinformation, 139*, p.104541. [\[JAG\]](https://www.sciencedirect.com/science/article/pii/S1569843225001888) \| [\[ArXiv\]](https://arxiv.org/abs/2402.14049) \| [\[Code\]](https://github.com/LiGuiye/LAG_Climate)
 - Huang, L.\*, Willis, M.J., ***Li, G.***, Lantz, T.C., Schaefer, K., Wig, E., Cao, G. and Tiampo, K.F., 2023. Identifying active retrogressive thaw slumps from ArcticDEM. *ISPRS Journal of Photogrammetry and Remote Sensing, 205*, pp.301-316. [\[ISPRS\]](https://www.sciencedirect.com/science/article/pii/S0924271623002836) \| [\[Code\]](https://github.com/yghlc/labelEarth)
 
@@ -88,6 +89,7 @@ Published / Accepted
 <!-- - *2021.06*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.
 - *2021.03*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.  \| [\[video\]](https://github.com/) -->
 
+- Cao, G. and <b><i>Li, G.</i></b>: GeoAI for small geospatial data. CPGIS 2026. Singapore. July 2026
 - ***Li, G.***, Yu, Z., and Cao, G.: The Perception-Precision Trade-Off in GeoAI. AAG 2026. San Francisco, CA. March 2026
 - <b><i>Li, G.</i></b> and Cao, G.: GeoAI for small geospatial data. AAG 2026. San Francisco, CA. March 2026
 - Wu, D., Cao, G., Srygley, R. and <b><i>Li, G.</i></b>: High resolution mapping of Mormon cricket with a Bayesian spatiotemporal species distribution model. AGU 2025. New Orleans, LA. December 2025
@@ -121,6 +123,7 @@ Journal Reviewer for:
 - Geographical Analysis
 - Journal of Geophysical Research: Machine Learning and Computation
 - International journal of applied earth observation and geoinformation
+- International Journal of Geographical Information Science
 
 Professional Memberships:
 - Association of American Geographers (AAG)
