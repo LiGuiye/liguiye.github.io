@@ -1,0 +1,135 @@
+---
+layout: null
+permalink: /meet/
+sitemap: false
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Find a time · Guiye Li</title>
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">Guiye Li<span class="brand-divider">/</span><span class="brand-section">Scheduling</span></a>
+    <a class="home-link" href="./">Scheduling home</a>
+  </header>
+  <main>
+    <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+    <section id="welcome" class="welcome" hidden>
+      <span class="eyebrow">Make time to meet</span>
+      <h1>Find a time, together.</h1>
+      <p>Create a scheduling poll or manage your events. To respond, open the invitation link shared by your organizer.</p>
+      <div class="home-actions"><button id="home-create" class="primary" type="button">Create new event</button><button id="home-events" class="secondary" type="button">Existing events</button><button id="home-profile" class="secondary" type="button">Create profile</button></div>
+      <p class="help">Organizer access is required to create or browse events.</p>
+    </section>
+    <section id="organizer-login" class="organizer-login card" hidden>
+      <span class="eyebrow">Organizer access</span>
+      <h1>Sign in to your organizer workspace.</h1>
+      <p class="muted">Use your organizer username and password to create and manage events.</p>
+      <form id="unlock-organizer">
+        <label for="organizer-username">Username</label>
+        <input id="organizer-username" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="80" placeholder="Your organizer username" required>
+        <label for="organizer-password" class="organizer-password-label">Password</label>
+        <input id="organizer-password" type="password" autocomplete="current-password" maxlength="128" placeholder="Your organizer password" required>
+        <p class="help">Your session stays signed in in this tab until you sign out, close the tab, or the session expires.</p>
+        <div class="home-actions"><button id="organizer-unlock" class="primary" type="submit">Sign in</button><button id="organizer-cancel" class="secondary" type="button">Back</button></div>
+        <p class="help">New here? <button id="login-create-profile" class="text-button" type="button">Create profile</button></p>
+      </form>
+    </section>
+    <section id="profile-signup" class="organizer-login card" hidden>
+      <span class="eyebrow">Your profile</span>
+      <h1>Create your profile.</h1>
+      <p class="muted">Create and manage your own scheduling events with a username and password.</p>
+      <form id="register-profile">
+        <label for="profile-username">Username</label><input id="profile-username" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="80" placeholder="Choose a username" required>
+        <label for="profile-password" class="organizer-password-label">Password</label><input id="profile-password" type="password" autocomplete="new-password" minlength="8" maxlength="128" placeholder="At least 8 characters" required>
+        <label for="profile-confirm" class="organizer-password-label">Confirm password</label><input id="profile-confirm" type="password" autocomplete="new-password" maxlength="128" placeholder="Enter your password again" required>
+        <p class="help">Your event list is private to your profile. Participants can respond through an event link without creating a profile.</p>
+        <div class="home-actions"><button id="profile-submit" class="primary" type="submit">Create profile</button><button id="profile-signin" class="secondary" type="button">Back to sign in</button></div>
+      </form>
+    </section>
+    <section id="dashboard" hidden>
+      <div class="event-heading"><div><span class="eyebrow">Organizer workspace</span><h1>Your events</h1><p class="muted">Create a poll, share an invitation, or update an existing event.</p><p id="organizer-user" class="help"></p></div><div class="dashboard-actions"><button id="dashboard-create" class="primary" type="button">Create new event</button><button id="dashboard-refresh" class="secondary" type="button">Refresh events</button><button id="organizer-lock" class="text-button" type="button">Sign out</button></div></div>
+      <div id="event-list" class="event-list"></div>
+    </section>
+    <section id="composer" class="composer card" hidden></section>
+    <section id="event-view" hidden>
+      <div class="event-heading">
+        <div>
+          <h1 id="event-title"></h1>
+          <p id="event-description" class="description"></p>
+          <p id="event-meta" class="muted"></p>
+        </div>
+        <div class="event-actions"><button id="share-event" type="button" class="secondary">Copy event link</button><button id="edit-event" type="button" class="primary" aria-label="Edit candidate times" hidden>Edit times</button><button id="delete-event" type="button" class="danger" hidden>Delete event</button></div>
+      </div>
+      <div class="toolbar">
+        <div class="timezone-control"><label for="display-zone">Times shown in</label><select id="display-zone"></select></div>
+        <p id="event-interval" class="help"></p>
+        <button id="refresh" type="button" class="text-button">↻ Refresh availability</button>
+      </div>
+      <div class="grids">
+        <section class="card availability-card">
+          <div class="panel-title"><span class="step">1</span><div><h2>Your availability</h2><p>Use your name to start or return to a response.</p></div></div>
+          <form id="participant-access">
+            <div class="access-fields"><label for="participant-name">Your name<input id="participant-name" autocomplete="username" maxlength="80" placeholder="Enter your name" required></label>
+            <label for="participant-password">Password <span class="muted">(optional)</span><input id="participant-password" type="password" autocomplete="current-password" maxlength="128" placeholder="Leave blank if not set"></label></div>
+            <button id="access-response" class="secondary" type="submit">Start / edit response</button>
+            <p class="help">Set an optional password the first time you use a name. Return with the same name and password to edit. Without a password, anyone using that name can edit.</p>
+          </form>
+          <div id="signed-in" class="signed-in" hidden><span id="current-name"></span><button id="change-name" type="button" class="text-button">Change name</button></div>
+          <p class="help grid-instructions">Choose how to mark cells, then tap, drag, or press Space on a cell.</p>
+          <div class="answer-tools" role="group" aria-label="Mark cells as"><button type="button" data-answer="available" aria-pressed="true">✓ Available</button><button type="button" data-answer="unavailable" aria-pressed="false">× Not available</button><button type="button" data-answer="unanswered" aria-pressed="false">? Clear answer</button></div>
+          <div class="legend"><span><i class="swatch selected" aria-hidden="true">✓</i>Available</span><span><i class="swatch unavailable" aria-hidden="true">×</i>Not available</span><span><i class="swatch unanswered" aria-hidden="true">?</i>Not answered yet</span></div>
+          <div id="own-grid" class="grid-wrap"></div>
+          <div class="save-bar"><span id="selection-count" class="muted"></span><button id="save-response" class="primary" type="button">Save availability</button></div>
+          <p class="help">Only cells you explicitly mark get an answer. Untouched cells stay unanswered when you save. Use Clear answer to return a cell to “Not answered yet.”</p>
+        </section>
+        <section class="card group-card">
+          <div class="panel-title"><span class="step">2</span><div><h2>Group availability</h2><p id="group-summary">No responses yet.</p></div></div>
+          <div class="group-legend"><span>Fewer available</span><div class="heat-scale"></div><span>More</span></div>
+          <p class="help">Numbers count people available for that time. “?” means nobody has answered that cell yet. Select a cell to see each person’s answers.</p>
+          <div id="group-grid" class="grid-wrap"></div>
+          <div id="slot-detail" class="slot-detail" aria-live="polite">Select a time to see who is available.</div>
+          <div id="participant-list" class="participant-list"></div>
+        </section>
+      </div>
+    </section>
+    <dialog id="delete-confirmation" aria-labelledby="delete-title" aria-describedby="delete-description">
+      <h2 id="delete-title">Delete this event?</h2>
+      <p id="delete-event-name"></p>
+      <p id="delete-description">This permanently deletes the event, all candidate times, and everyone’s responses. This cannot be undone.</p>
+      <p id="delete-error" class="error" role="alert" hidden></p>
+      <div class="dialog-actions"><button id="cancel-delete" type="button" class="secondary" autofocus>Keep event</button><button id="confirm-delete" type="button" class="danger">Delete event permanently</button></div>
+    </dialog>
+    <noscript><p>This page needs JavaScript to save and compare availability.</p></noscript>
+  </main>
+  <footer>Availability is saved when you choose Save. Events stay open while you arrange a time.</footer>
+  <template id="composer-template">
+    <span class="eyebrow composer-eyebrow">Create an event</span>
+    <h1 class="composer-title">Let’s find a time.</h1>
+    <p class="composer-intro">Choose the dates and hours you’d like everyone to consider.</p>
+    <form class="event-form">
+      <div class="form-columns"><div class="form-settings">
+        <label>Event title<input name="title" maxlength="160" placeholder="e.g. Committee meeting" required></label>
+        <label>Description <span class="muted">(optional)</span><textarea name="description" maxlength="2000" rows="3" placeholder="A few details for your guests"></textarea></label>
+        <label>Event timezone<select name="timezone" aria-label="Event timezone"></select></label>
+        <fieldset><legend>Candidate dates</legend><div class="inline"><input name="date" type="date" aria-label="Candidate date"><button type="button" class="secondary add-date">Add date</button></div><div class="date-chips"></div><p class="help">Choose up to 31 dates. They can span multiple weeks.</p></fieldset>
+        <div class="hour-fields"><label>From<select name="start" aria-label="From"></select></label><label>Until<select name="end" aria-label="Until"></select></label></div>
+        <label>Time per cell<select name="increment" aria-label="Time per cell"><option value="15">15 minutes</option><option value="30">30 minutes</option><option value="60">60 minutes</option></select><span class="help">Everyone uses this interval. Changing it replaces resized cells and their answers; review the candidate times before saving.</span></label>
+      </div><div class="candidate-panel">
+        <h2>Candidate times</h2><p class="help">Selected cells will be offered to participants. Tap or drag to adjust.</p>
+        <div class="legend"><span><i class="swatch selected" aria-hidden="true">✓</i>Offered</span><button type="button" class="text-button select-all">Select all</button><button type="button" class="text-button clear-all">Clear</button></div>
+        <div class="candidate-grid grid-wrap"><p class="empty-grid">Add a date to start.</p></div>
+      </div></div>
+      <div class="composer-bottom"><p class="candidate-summary muted"></p><div class="inline"><button type="button" class="secondary cancel-editor" hidden>Cancel</button><button type="submit" class="primary save-event">Create event</button></div></div>
+      <p class="help editor-note">Share the participation link with your guests and manage this event from your organizer workspace.</p>
+    </form>
+  </template>
+</body>
+</html>

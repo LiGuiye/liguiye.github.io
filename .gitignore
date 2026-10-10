@@ -2,3 +2,12 @@ _site/
 push.sh
 .DS_Store
 .sass-cache
+node_modules/
+.wrangler/
+.dev.vars*
+.dev.login.json
+.organizer-secrets.json
+.bundle/
+.jekyll-cache/
+.jekyll-metadata
+vendor/bundle/

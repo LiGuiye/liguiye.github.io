@@ -1,0 +1,23 @@
+{
+	"$schema": "../node_modules/wrangler/config-schema.json",
+	"name": "guiye-scheduler",
+	"main": "src/worker.ts",
+	"compatibility_date": "2026-10-09",
+	"workers_dev": true,
+	"vars": {
+		"ALLOWED_ORIGIN": "https://liguiye.github.io"
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "guiye-scheduler",
+			"database_id": "781029e7-27c5-461f-97cc-49a2c3e05a9c",
+			"migrations_dir": "migrations"
+		},
+		{
+			"binding": "guiye_scheduler",
+			"database_name": "guiye-scheduler",
+			"database_id": "781029e7-27c5-461f-97cc-49a2c3e05a9c"
+		}
+	]
+}

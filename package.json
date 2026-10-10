@@ -1,0 +1,22 @@
+{
+  "name": "guiye-event-scheduler",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "organizer:setup": "node scripts/organizer-setup.mjs",
+    "organizer:secrets": "node scripts/organizer-setup.mjs --production",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/time.test.mjs tests/api.test.mjs",
+    "test:unit": "node --test tests/time.test.mjs",
+    "test:api": "node --test tests/api.test.mjs"
+  },
+  "dependencies": {
+    "luxon": "3.7.2"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "5.20261009.1",
+    "typescript": "7.0.2",
+    "wrangler": "4.149.0"
+  }
+}

@@ -65,6 +65,11 @@ include:
   - _pages
   - files
 exclude:
+  - scheduler
+  - scripts
+  - tests
+  - package-lock.json
+  - tsconfig.json
   - docs
   - google_scholar_crawler
   - "*.sublime-project"
