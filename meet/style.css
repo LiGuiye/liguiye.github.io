@@ -99,6 +99,10 @@ main { max-width: 1440px; margin: 0 auto; padding: 26px 4vw 44px; }
 .answer-tools button[data-answer="available"] { background: #dceee2; }
 .answer-tools button[data-answer="unavailable"] { background: #f4e6e2; }
 .answer-tools button[data-answer="unanswered"] { background: #f4f0fa; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin: 10px 0; font-size: 11px; color: var(--muted); }
+.legend span { display: inline-flex; gap: 6px; align-items: center; }
+.swatch { width: 17px; height: 17px; border-radius: 3px; border: 1px solid var(--line); display: inline-flex; justify-content: center; align-items: center; font-style: normal; font-weight: 700; color: var(--green-dark); }
+.swatch.selected { background: #75b18c; border-color: #75b18c; }
 .slot.unavailable { background: #f4e6e2; color: #865144; }
 .slot.unanswered { background: repeating-linear-gradient(135deg, #f4f0fa, #f4f0fa 5px, #e8e0f2 5px, #e8e0f2 6px); color: #6e548d; }
 .grid-wrap { overflow: auto; max-width: 100%; max-height: 500px; border: 1px solid var(--line); border-radius: 8px; background: white; overscroll-behavior: contain; }

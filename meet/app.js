@@ -1,5 +1,5 @@
 import { request, privateLink } from './api.js';
-import { DateTime, makeCandidates, gridModel, editorDefaults } from './time.js';
+import { DateTime, makeCandidates, gridModel, editorDefaults, timeCoverage } from './time.js';
 import { availabilityStatus, savedResponses, statusLabels } from './availability.js';
 
 const $ = selector => document.querySelector(selector);
@@ -141,11 +141,13 @@ function renderGrid(container, slots, displayZone, { selected, answers, touched 
     button.textContent = status === 'available' ? '✓' : answers ? status === 'unanswered' ? '?' : '×' : '';
     button.setAttribute('aria-label', text); button.title = text;
   }
-  const hasHourRows = model.rows.some(row => row.key.slice(3, 5) === '00');
+  const labelStep = slotMinutes === 15 ? 30 : 60;
+  const labelBoundary = row => Number(row.key.slice(3, 5)) % labelStep === 0;
+  const hasLabelRows = model.rows.some(labelBoundary);
   for (const [index, row] of model.rows.entries()) {
     const hour = row.key.slice(3, 5) === '00';
     const tr = element('tr', hour ? 'hour' : '');
-    const showTime = index === 0 || hour || !hasHourRows || row.label.includes('(repeat)');
+    const showTime = index === 0 || labelBoundary(row) || !hasLabelRows || row.label.includes('(repeat)');
     const label = element('th');
     label.append(element('span', 'time-label', showTime ? row.label : ''));
     label.scope = 'row'; label.setAttribute('aria-label', row.label); label.title = row.label; tr.append(label);
@@ -218,7 +220,7 @@ function showComposer(editing = false) {
   const key = slot => `${slot.startUtc}/${slot.endUtc}`;
   let slotMinutes = editing ? state.event.slotMinutes : 15;
   let dates = defaults.dates, options = [], selected = new Set(editing ? state.slots.map(key) : []), valid = true;
-  const original = new Map(editing ? state.slots.map(slot => [key(slot), slot]) : []);
+  const originalTimes = timeCoverage(editing ? state.slots : []);
   const editRevision = state?.event.slotRevision;
   let pendingCreation;
   fillZones(fields.timezone, editing ? state.event.timezone : 'America/Denver');
@@ -238,7 +240,7 @@ function showComposer(editing = false) {
     container.querySelector('.composer-title').textContent = 'Edit candidate times';
     container.querySelector('.composer-intro').textContent = 'Keep the times you need, add new options, or remove dates.';
     container.querySelector('.save-event').textContent = 'Save event changes';
-    container.querySelector('.editor-note').textContent = 'Answers stay attached to identical time ranges. Removed or resized cells and their answers are deleted. New cells start unanswered.';
+    container.querySelector('.editor-note').textContent = 'Saved answers follow covered times when the interval changes. Removed times lose their answers; new times start unanswered.';
   }
   container.querySelector('.cancel-editor').hidden = false;
   container.querySelector('.cancel-editor').textContent = editing ? 'Cancel' : 'Back to events';
@@ -247,10 +249,10 @@ function showComposer(editing = false) {
       container.querySelector('.candidate-summary').textContent = 'Choose a valid time window before saving.';
       container.querySelector('.save-event').disabled = true; return;
     }
-    const kept = [...selected].filter(start => original.has(start)).length;
-    const originalMinutes = editing ? state.event.slotMinutes : 15;
+    const chosenTimes = timeCoverage(options.filter(slot => selected.has(key(slot))));
+    const kept = [...chosenTimes].filter(time => originalTimes.has(time)).length;
     container.querySelector('.candidate-summary').textContent = editing
-      ? `${kept * originalMinutes} min kept · ${(selected.size - kept) * slotMinutes} min added · ${(original.size - kept) * originalMinutes} min removed`
+      ? `${kept * 15} min kept · ${(chosenTimes.size - kept) * 15} min added · ${(originalTimes.size - kept) * 15} min removed`
       : `${dates.length} ${dates.length === 1 ? 'date' : 'dates'} · ${selected.size} cells · ${slotMinutes} minutes per cell`;
     container.querySelector('.save-event').disabled = !valid || !selected.size;
   }
@@ -263,9 +265,10 @@ function showComposer(editing = false) {
   }
   function regenerate(initial = false) {
     try {
-      const previous = new Set(options.map(key));
+      const previous = timeCoverage(options), chosen = timeCoverage(options.filter(slot => selected.has(key(slot))));
       options = makeCandidates(dates, fields.start.value, fields.end.value, fields.timezone.value, slotMinutes);
-      selected = new Set(options.filter(slot => initial && editing ? selected.has(key(slot)) : selected.has(key(slot)) || !previous.has(key(slot))).map(key));
+      selected = new Set(options.filter(slot => initial && editing ? selected.has(key(slot))
+        : [...timeCoverage([slot])].every(time => !previous.has(time) || chosen.has(time))).map(key));
       notice('');
       valid = true; grid();
     } catch (error) {
@@ -312,7 +315,7 @@ function showComposer(editing = false) {
       }
       homePanel('event-view');
       applyState(next, true);
-      notice(editing ? 'Event updated. Answers for unchanged times have been kept.' : 'Event created. Share the event link and manage it from your organizer workspace.');
+      notice(editing ? 'Event updated. Answers for retained times have been kept.' : 'Event created. Share the event link and manage it from your organizer workspace.');
     } catch (error) { notice(error.message, true); }
     finally { controls.forEach(([control, disabled]) => { control.disabled = disabled; }); button.textContent = originalLabel; summary(); }
   });

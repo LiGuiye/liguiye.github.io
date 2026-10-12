@@ -40,6 +40,14 @@ export function makeCandidates(dates, start, end, zone, slotMinutes = 15) {
   return result;
 }
 
+export function timeCoverage(slots) {
+  const times = new Set();
+  for (const slot of slots) {
+    for (let time = Date.parse(slot.startUtc); time < Date.parse(slot.endUtc); time += 900_000) times.add(time);
+  }
+  return times;
+}
+
 export function gridModel(slots, zone) {
   const days = new Map(), rowLabels = new Map();
   for (const slot of [...slots].sort((a, b) => a.startUtc.localeCompare(b.startUtc))) {

@@ -7,6 +7,7 @@ import { join } from 'node:path';
 import { randomBytes, randomUUID, createHash } from 'node:crypto';
 import { startServer } from '../scripts/server.mjs';
 import { makeOrganizerConfig } from '../scripts/organizer-config.mjs';
+import { makeCandidates } from '../meet/time.js';
 
 const token = () => randomBytes(32).toString('base64url');
 const organizerPassword = 'local-organizer-test-password';
@@ -446,7 +447,7 @@ test('conflicting or foreign explicit answers are rejected without changing save
   assert.deepEqual((await api(`/events/${event.id}`)).data.availability, guest.response.data.availability);
 });
 
-test('event intervals are stored and resized cells get new identities and unanswered responses', async () => {
+test('event intervals are stored and resized cells inherit only fully covered answers', async () => {
   for (const minutes of [15, 30, 60]) {
     const event = await create([slot(15, 0, minutes), slot(16, 0, minutes)], creator, minutes);
     assert.equal((await api(`/events/${event.id}`)).data.event.slotMinutes, minutes);
@@ -463,10 +464,84 @@ test('event intervals are stored and resized cells get new identities and unansw
     assert.equal(resized.status, 200, JSON.stringify(resized.data));
     assert.equal(resized.data.event.slotMinutes, nextMinutes);
     assert.notEqual(resized.data.slots[0].id, event.state.slots[0].id);
-    assert.deepEqual(resized.data.availability, []);
+    assert.deepEqual(resized.data.availability, minutes === 60
+      ? [{ participantId: guest.id, slotId: resized.data.slots[0].id, available: true }] : []);
     const stale = await save(event, { id: guest.id, secret: guest.secret, revision: 1 });
     assert.equal(stale.response.status, 409);
   }
+});
+
+test('saved available and unavailable answers survive interval changes in both directions', async () => {
+  const event = await create([slot(15, 0, 60), slot(16, 0, 60)], creator, 60);
+  const guest = await save(event, { available: [event.state.slots[0].id], unavailable: [event.state.slots[1].id], password: 'interval-test-password' });
+  for (const minutes of [30, 15, 30, 60]) {
+    const ranges = Array.from({ length: 120 / minutes }, (_, i) => slot(15 + Math.floor(i * minutes / 60), i * minutes % 60, minutes));
+    const changed = await edit(event, [...ranges, slot(18, 0, minutes)], { slotMinutes: minutes });
+    assert.equal(changed.status, 200, JSON.stringify(changed.data));
+    const answers = new Map(changed.data.availability.map(answer => [answer.slotId, answer.available]));
+    assert.equal(answers.size, ranges.length);
+    for (const candidate of changed.data.slots) {
+      if (candidate.startUtc === slot(18).startUtc) assert.equal(answers.has(candidate.id), false);
+      else assert.equal(answers.get(candidate.id), candidate.startUtc < slot(16).startUtc);
+    }
+    event.state = changed.data;
+  }
+  const reopened = await api(`/events/${event.id}/participants/access`, { method: 'POST', data: { name: 'Guest', password: 'interval-test-password' } });
+  assert.equal(reopened.status, 200);
+  assert.equal(reopened.data.participant.id, guest.id);
+  const updated = await save(event, { id: guest.id, secret: guest.secret, revision: 1, available: [], unavailable: event.state.slots.map(slot => slot.id) });
+  assert.equal(updated.response.status, 200);
+  assert.ok(updated.response.data.availability.every(answer => answer.available === false));
+});
+
+test('merged cells remain unanswered for conflicts, missing answers, gaps, and new time', async () => {
+  const ranges = Array.from({ length: 12 }, (_, i) => slot(15 + Math.floor(i / 4), i % 4 * 15)).filter((_, i) => i !== 9);
+  const event = await create(ranges);
+  const ids = new Map(event.state.slots.map(candidate => [candidate.startUtc, candidate.id]));
+  const guest = await save(event, {
+    available: [slot(15), slot(15, 15), slot(16), slot(16, 30), slot(17)].map(candidate => ids.get(candidate.startUtc)),
+    unavailable: [slot(15, 30), slot(15, 45), slot(16, 15)].map(candidate => ids.get(candidate.startUtc))
+  });
+  assert.equal(guest.response.status, 200);
+  const merged = await edit(event, Array.from({ length: 6 }, (_, i) => slot(15 + Math.floor(i / 2), i % 2 * 30, 30)), { slotMinutes: 30 });
+  assert.equal(merged.status, 200, JSON.stringify(merged.data));
+  assert.deepEqual(new Map(merged.data.availability.map(answer => [answer.slotId, answer.available])),
+    new Map([[merged.data.slots[0].id, true], [merged.data.slots[1].id, false]]));
+});
+
+test('resizing preserves each participant across repeated hours and midnight', async () => {
+  for (const [date, start, end, increments] of [
+    ['2026-11-01', '00:30', '02:30', [15, 60]],
+    ['2026-10-12', '23:30', '24:00', [15, 30]]
+  ]) {
+    const event = await create(makeCandidates([date], start, end, 'America/Denver', 30), creator, 30);
+    const alice = await save(event, { name: 'Alice' });
+    const bob = await save(event, { name: 'Bob', available: [], unavailable: event.state.slots.map(slot => slot.id) });
+    for (const minutes of increments) {
+      const changed = await edit(event, makeCandidates([date], start, end, 'America/Denver', minutes), { slotMinutes: minutes });
+      assert.equal(changed.status, 200, JSON.stringify(changed.data));
+      for (const [person, value] of [[alice, true], [bob, false]]) {
+        const answers = changed.data.availability.filter(answer => answer.participantId === person.id);
+        assert.equal(answers.length, changed.data.slots.length);
+        assert.ok(answers.every(answer => answer.available === value));
+      }
+      event.state = changed.data;
+    }
+  }
+});
+
+test('a concurrent participant save is not lost during interval conversion', async () => {
+  const event = await create([slot(15, 0, 60)], creator, 60), guest = await save(event);
+  const [resized, saved] = await Promise.all([
+    edit(event, [slot(15), slot(15, 15), slot(15, 30), slot(15, 45)], { slotMinutes: 15 }),
+    save(event, { id: guest.id, secret: guest.secret, revision: 1, available: [], unavailable: [event.state.slots[0].id] })
+  ]);
+  assert.ok([200, 409].includes(resized.status));
+  assert.ok([200, 409].includes(saved.response.status));
+  assert.ok(resized.status === 200 || saved.response.status === 200);
+  const current = (await api(`/events/${event.id}`)).data;
+  assert.equal(current.availability.length, current.slots.length);
+  assert.ok(current.availability.every(answer => answer.available === (saved.response.status !== 200)));
 });
 
 test('invalid event intervals, mismatched durations, and overlapping cells are rejected', async () => {

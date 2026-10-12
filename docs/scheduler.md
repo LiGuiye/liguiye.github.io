@@ -99,8 +99,8 @@ Choose up to 31 dates, adjust the
 daily hour window, or toggle individual candidate cells. The summary shows how
 many minutes will be kept, added, or removed before saving.
 
-Answers for identical time ranges are preserved. Deleted or resized cells and
-their answers are removed. New cells stay unanswered until each participant
+Answers for identical time ranges are preserved. Deleted times and
+their answers are removed. New times stay unanswered until each participant
 explicitly marks and saves them. Readding a
 previously deleted time creates a fresh unanswered slot. No event automatically
 expires, and there is no scheduled cleanup.
@@ -114,9 +114,13 @@ fall-back times are distinguished, and nonexistent window boundaries are rejecte
 minutes. Every stored cell has that duration, and all participants use the same
 cells. Participants can change only their display timezone. Existing events
 receive a 15-minute default without changing their cells or saved answers.
-Organizers can change the interval in **Edit candidate times**. Resized cells are
-new time ranges, so their old answers are deleted and their replacements start
-unanswered. The editor shows kept, added, and removed minutes before saving.
+Organizers can change the interval in **Edit candidate times**. Smaller cells
+inherit the saved answer covering that time. Larger cells inherit an answer only
+when their entire range is covered by matching saved answers; conflicts, gaps,
+and partly unanswered ranges stay unanswered. This applies to both available
+and not available answers. The editor preserves offered times where a whole new
+cell fits, and shows kept, added, and removed minutes before saving.
+For 15-minute cells, the grid shows time labels every 30 minutes.
 Daily windows must fit whole cells; adjust **From** or **Until** if necessary.
 
 Your grid uses green **✓ Available**, rose **× Not available**, and striped purple
@@ -149,7 +153,7 @@ deploy resources. Tests cover open signup, duplicate usernames, password validat
 cross-profile isolation, login, sign-out, expiry, separate login/signup attempt
 limits, profile-specific listing and management, optional
 passwords, returning by name, permission checks, unchanged and deleted slots,
-partial responses, clearing answers, event intervals, resized unanswered cells,
+partial responses, clearing answers, event intervals, splitting and merging answers,
 short links and compatibility with old invitations,
 owner-only deletion and removal of associated responses and sessions,
 stale submissions, concurrent edits, duplicate retries,

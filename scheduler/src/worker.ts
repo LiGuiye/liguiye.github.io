@@ -132,6 +132,32 @@ function candidates(value: unknown, timezone: string, slotMinutes: number): Cand
   }
   return result;
 }
+function resizedAnswers(current: Snapshot, slots: Slot[]) {
+  const oldSlots = new Map(current.slots.map(slot => [slot.id, slot]));
+  const coverage = new Map<string, Map<number, boolean>>();
+  for (const answer of current.availability) {
+    const slot = oldSlots.get(answer.slotId)!;
+    let times = coverage.get(answer.participantId);
+    if (!times) { times = new Map(); coverage.set(answer.participantId, times); }
+    for (let time = Date.parse(slot.startUtc); time < Date.parse(slot.endUtc); time += 900_000) {
+      times.set(time, answer.available);
+    }
+  }
+  const ranges = slots.map(slot => ({ ...slot, start: Date.parse(slot.startUtc), end: Date.parse(slot.endUtc) }));
+  const result: Answer[] = [];
+  for (const [participantId, times] of coverage) {
+    for (const slot of ranges) {
+      const value = times.get(slot.start);
+      if (value === undefined) continue;
+      let agrees = true;
+      for (let time = slot.start; time < slot.end; time += 900_000) {
+        if (times.get(time) !== value) { agrees = false; break; }
+      }
+      if (agrees) result.push({ participantId, slotId: slot.id, available: value ? 1 : 0 });
+    }
+  }
+  return result;
+}
 function json(value: unknown, status = 200): Response {
   return Response.json(value, { status, headers: { 'Cache-Control': 'no-store' } });
 }
@@ -309,12 +335,14 @@ async function editEvent(env: Env, id: string, request: Request): Promise<Respon
   }
   const slotMinutes = interval(input.slotMinutes ?? current.event.slotMinutes);
   const slots = candidates(input.slots, current.event.timezone, slotMinutes).map(slot => ({ ...slot, id: crypto.randomUUID() }));
+  const answers = slotMinutes === current.event.slotMinutes ? [] : resizedAnswers(current, slots);
   const payload = JSON.stringify(slots), mutation = crypto.randomUUID();
+  // A response saved after this snapshot must make the edit retry instead of transferring stale answers.
   const writes = await env.DB.batch([
     env.DB.prepare(`UPDATE events SET title = ?, description = ?, slot_minutes = ?, slot_revision = slot_revision + 1,
       revision = revision + 1, mutation_id = ?, updated_at = ?
-      WHERE id = ? AND owner_id = ? AND slot_revision = ?`)
-      .bind(title, description, slotMinutes, mutation, new Date().toISOString(), id, profile.id, expected),
+      WHERE id = ? AND owner_id = ? AND slot_revision = ? AND revision = ?`)
+      .bind(title, description, slotMinutes, mutation, new Date().toISOString(), id, profile.id, expected, current.event.revision),
     env.DB.prepare(`DELETE FROM slots WHERE event_id = ?
       AND NOT EXISTS (SELECT 1 FROM json_each(?)
         WHERE json_extract(value, '$.startUtc') = slots.start_utc AND json_extract(value, '$.endUtc') = slots.end_utc)
@@ -323,7 +351,11 @@ async function editEvent(env: Env, id: string, request: Request): Promise<Respon
     env.DB.prepare(`INSERT INTO slots (id, event_id, start_utc, end_utc)
       SELECT json_extract(value, '$.id'), ?, json_extract(value, '$.startUtc'), json_extract(value, '$.endUtc')
       FROM json_each(?) WHERE EXISTS (SELECT 1 FROM events WHERE id = ? AND mutation_id = ?)
-      ON CONFLICT(event_id, start_utc) DO NOTHING`).bind(id, payload, id, mutation)
+      ON CONFLICT(event_id, start_utc) DO NOTHING`).bind(id, payload, id, mutation),
+    env.DB.prepare(`INSERT INTO availability (participant_id, slot_id, available)
+      SELECT json_extract(value, '$.participantId'), json_extract(value, '$.slotId'), json_extract(value, '$.available')
+      FROM json_each(?) WHERE EXISTS (SELECT 1 FROM events WHERE id = ? AND mutation_id = ?)`)
+      .bind(JSON.stringify(answers), id, mutation)
   ]);
   if (!writes[0].meta.changes) changed();
   return result(await snapshot(env, id));

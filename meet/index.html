@@ -117,7 +117,7 @@ sitemap: false
         <label>Event timezone<select name="timezone" aria-label="Event timezone"></select></label>
         <fieldset><legend>Candidate dates</legend><div class="inline"><input name="date" type="date" aria-label="Candidate date"><button type="button" class="secondary add-date">Add date</button></div><div class="date-chips"></div><p class="help">Choose up to 31 dates. They can span multiple weeks.</p></fieldset>
         <div class="hour-fields"><label>From<select name="start" aria-label="From"></select></label><label>Until<select name="end" aria-label="Until"></select></label></div>
-        <label>Time per cell<select name="increment" aria-label="Time per cell"><option value="15">15 minutes</option><option value="30">30 minutes</option><option value="60">60 minutes</option></select><span class="help">Everyone uses this interval. Changing it replaces resized cells and their answers; review the candidate times before saving.</span></label>
+        <label>Time per cell<select name="increment" aria-label="Time per cell"><option value="15">15 minutes</option><option value="30">30 minutes</option><option value="60">60 minutes</option></select><span class="help">Saved answers carry over when the whole new cell agrees. Mixed or partly unanswered cells stay unanswered.</span></label>
       </div><div class="candidate-panel">
         <h2>Candidate times</h2><p class="help">Selected cells will be offered to participants. Tap or drag to adjust.</p>
         <div class="legend"><span><i class="swatch selected" aria-hidden="true">✓</i>Offered</span><button type="button" class="text-button select-all">Select all</button><button type="button" class="text-button clear-all">Clear</button></div>
