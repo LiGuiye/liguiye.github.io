@@ -48,7 +48,7 @@ function identified(slots) { return slots.map((slot, i) => ({ ...slot, id: Strin
 test('15, 30, and 60-minute events generate actual cells of the chosen duration', () => {
   for (const [increment, count] of [[15, 16], [30, 8], [60, 4]]) {
     const slots = identified(makeCandidates(['2026-10-12', '2026-10-13'], '09:00', '11:00', 'America/Denver', increment));
-    const grouped = cells(gridModel(slots, 'America/Denver', increment));
+    const grouped = cells(gridModel(slots, 'America/Denver'));
     assert.equal(grouped.length, count);
     assert.deepEqual(grouped.map(cell => cell.id).sort(), slots.map(slot => slot.id).sort());
     assert.ok(grouped.every(cell => Date.parse(cell.endUtc) - Date.parse(cell.startUtc) === increment * 60_000));
@@ -57,11 +57,11 @@ test('15, 30, and 60-minute events generate actual cells of the chosen duration'
 
 test('cells fit the selected window and gaps remain unoffered', () => {
   const slots = identified(makeCandidates(['2026-10-12'], '09:15', '10:15', 'America/Denver', 30));
-  const grouped = cells(gridModel(slots, 'America/Denver', 30));
+  const grouped = cells(gridModel(slots, 'America/Denver'));
   assert.equal(grouped.length, 2);
   assert.equal(grouped[0].startUtc, slots[0].startUtc);
   assert.equal(grouped[1].endUtc, slots[1].endUtc);
-  const withGap = cells(gridModel(slots.filter(slot => slot.id !== '1'), 'America/Denver', 30));
+  const withGap = cells(gridModel(slots.filter(slot => slot.id !== '1'), 'America/Denver'));
   assert.deepEqual(withGap.map(cell => cell.id), ['0']);
   assert.throws(() => makeCandidates(['2026-10-12'], '09:15', '10:00', 'America/Denver', 30), /whole 30-minute/);
   assert.throws(() => makeCandidates(['2026-10-12'], '09:00', '10:00', 'America/Denver', 45), /15, 30, or 60/);
@@ -69,13 +69,13 @@ test('cells fit the selected window and gaps remain unoffered', () => {
 
 test('longer views preserve repeated hours and timezone day boundaries', () => {
   const slots = identified(makeCandidates(['2026-11-01'], '00:00', '04:00', 'America/Denver', 60));
-  const grouped = cells(gridModel(slots, 'America/Denver', 60));
+  const grouped = cells(gridModel(slots, 'America/Denver'));
   assert.equal(grouped.length, 5);
   assert.equal(grouped.filter(cell => cell.time.hour === 1).length, 2);
   assert.notEqual(grouped[1].time.offset, grouped[2].time.offset);
-  assert.ok(gridModel(slots, 'America/Denver', 60).rows.some(row => row.label.includes('repeat')));
+  assert.ok(gridModel(slots, 'America/Denver').rows.some(row => row.label.includes('repeat')));
   const midnight = identified(makeCandidates(['2026-10-12'], '17:30', '19:30', 'America/Denver', 60));
-  const utc = gridModel(midnight, 'UTC', 60);
+  const utc = gridModel(midnight, 'UTC');
   assert.equal(utc.days.length, 2);
   assert.deepEqual(cells(utc).map(cell => cell.id), midnight.map(slot => slot.id));
   assert.ok(cells(utc).every(cell => Date.parse(cell.endUtc) - Date.parse(cell.startUtc) === 3_600_000));
@@ -90,4 +90,28 @@ test('explicit false answers differ from unanswered cells and can be cleared', (
   assert.equal(availabilityStatus(slots[1], answers), 'available');
   answers.delete('a');
   assert.equal(availabilityStatus(slots[0], answers), 'unanswered');
+});
+
+test('sparse dates are grouped by calendar week, including year boundaries', () => {
+  const dates = ['2026-11-02', '2026-11-09', '2026-11-13', '2026-11-16', '2026-12-31', '2027-01-01', '2027-01-04'];
+  const slots = identified(makeCandidates(dates, '12:00', '12:30', 'America/Denver', 30));
+  const grid = gridModel(slots, 'America/Denver');
+  assert.deepEqual(grid.days.map(day => day.week), ['2026-11-02', '2026-11-09', '2026-11-09', '2026-11-16', '2026-12-28', '2026-12-28', '2027-01-04']);
+  assert.deepEqual(cells(grid).map(cell => cell.id).sort(), slots.map(slot => slot.id).sort());
+});
+
+test('week grouping follows the displayed timezone without moving slots', () => {
+  const slots = identified(makeCandidates(['2026-11-08'], '23:30', '24:00', 'America/Denver', 30));
+  const local = gridModel(slots, 'America/Denver'), utc = gridModel(slots, 'UTC');
+  assert.equal(local.days[0].week, '2026-11-02');
+  assert.equal(utc.days[0].week, '2026-11-09');
+  assert.equal(cells(local)[0].id, cells(utc)[0].id);
+});
+
+test('row labels use start times while cell details retain the full interval', () => {
+  const slots = identified(makeCandidates(['2026-11-09'], '12:00', '13:00', 'America/Denver', 30));
+  const grid = gridModel(slots, 'America/Denver');
+  assert.deepEqual(grid.rows.map(row => row.label), ['12:00 PM', '12:30 PM']);
+  assert.match(cells(grid)[0].label, /12:00 PM MST – 12:30 PM MST/);
+  assert.deepEqual(cells(grid).map(cell => cell.id), slots.map(slot => slot.id));
 });

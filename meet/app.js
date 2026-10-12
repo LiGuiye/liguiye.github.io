@@ -113,21 +113,25 @@ async function copy(value, message = 'Link copied.') {
 
 function renderGrid(container, slots, displayZone, { selected, answers, touched = new Set(), toggle, responses, detail, slotMinutes = state?.event.slotMinutes ?? 15 } = {}) {
   container.replaceChildren();
-  const model = gridModel(slots, displayZone, slotMinutes);
+  const model = gridModel(slots, displayZone);
   if (!model.days.length) { container.append(element('p', 'empty-grid', 'Add a date to start.')); return; }
   const table = element('table', 'time-grid');
   table.dataset.increment = slotMinutes;
   table.setAttribute('aria-label', toggle ? 'Select time slots' : 'Group availability by time slot');
   const head = element('thead'), headers = element('tr');
   headers.append(element('th', '', 'Time'));
+  const weekStarts = new Set(model.days.filter((day, index) => index > 0 && day.week !== model.days[index - 1].week).map(day => day.date));
   for (const day of model.days) {
-    const th = element('th', '', day.label);
+    const th = element('th', weekStarts.has(day.date) ? 'week-start' : '', day.sublabel);
     th.scope = 'col';
-    th.append(element('span', '', day.sublabel));
+    th.append(element('span', '', day.label));
     headers.append(th);
   }
   head.append(headers);
   const body = element('tbody'), buttons = new Map();
+  const spacer = element('tr', 'grid-spacer'), spacerCell = element('td');
+  spacer.setAttribute('aria-hidden', 'true'); spacerCell.colSpan = model.days.length + 1;
+  spacer.append(spacerCell); body.append(spacer);
   function paintCell(button, cell) {
     const status = answers ? availabilityStatus(cell, answers) : selected.has(cell.id) ? 'available' : 'unavailable';
     button.setAttribute('aria-pressed', String(status === 'available'));
@@ -137,11 +141,16 @@ function renderGrid(container, slots, displayZone, { selected, answers, touched 
     button.textContent = status === 'available' ? '✓' : answers ? status === 'unanswered' ? '?' : '×' : '';
     button.setAttribute('aria-label', text); button.title = text;
   }
-  for (const row of model.rows) {
-    const tr = element('tr', row.key.slice(3, 5) === '00' ? 'hour' : '');
-    const label = element('th', '', row.label); label.scope = 'row'; tr.append(label);
+  const hasHourRows = model.rows.some(row => row.key.slice(3, 5) === '00');
+  for (const [index, row] of model.rows.entries()) {
+    const hour = row.key.slice(3, 5) === '00';
+    const tr = element('tr', hour ? 'hour' : '');
+    const showTime = index === 0 || hour || !hasHourRows || row.label.includes('(repeat)');
+    const label = element('th');
+    label.append(element('span', 'time-label', showTime ? row.label : ''));
+    label.scope = 'row'; label.setAttribute('aria-label', row.label); label.title = row.label; tr.append(label);
     for (const day of model.days) {
-      const td = element('td'), slot = day.cells.get(row.key);
+      const td = element('td', weekStarts.has(day.date) ? 'week-start' : ''), slot = day.cells.get(row.key);
       if (slot) {
         const button = element('button', 'slot');
         button.type = 'button'; button.dataset.slotId = slot.id;
@@ -167,7 +176,14 @@ function renderGrid(container, slots, displayZone, { selected, answers, touched 
     }
     body.append(tr);
   }
-  table.append(head, body); container.append(table);
+  const lastSlot = model.days.map(day => day.cells.get(model.rows.at(-1).key)).find(Boolean);
+  const endTime = DateTime.fromISO(lastSlot.endUtc, { zone: displayZone }).toFormat('h:mm a');
+  const foot = element('tfoot'), endRow = element('tr'), endLabel = element('th'), endSpace = element('td');
+  endLabel.append(element('span', 'time-label', endTime));
+  endLabel.setAttribute('aria-label', `Ending time: ${endTime}`);
+  endSpace.colSpan = model.days.length;
+  endRow.append(endLabel, endSpace); foot.append(endRow);
+  table.append(head, body, foot); container.append(table);
   if (!toggle) return;
   let dragging = false, paint;
   const apply = button => {
@@ -347,7 +363,6 @@ function renderEventGrids() {
     } });
   const responses = state.participants.map(person => new Map(state.availability.filter(answer => answer.participantId === person.id).map(answer => [answer.slotId, answer.available])));
   renderGrid($('#group-grid'), state.slots, zone, { responses, detail: showDetail });
-  $('#group-summary').textContent = state.participants.length ? `${state.participants.length} ${state.participants.length === 1 ? 'person has' : 'people have'} responded. Darker cells mean more overlap.` : 'No responses yet. Yours can be the first.';
   $('#participant-list').replaceChildren(...state.participants.map(person => element('span', 'name-chip', `${person.name}${person.passwordProtected ? ' 🔒' : ''}`)));
   selectionCount(); disableOwn(busy || !identity);
 }

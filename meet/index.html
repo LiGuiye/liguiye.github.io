@@ -78,22 +78,19 @@ sitemap: false
           <div class="panel-title"><span class="step">1</span><div><h2>Your availability</h2><p>Use your name to start or return to a response.</p></div></div>
           <form id="participant-access">
             <div class="access-fields"><label for="participant-name">Your name<input id="participant-name" autocomplete="username" maxlength="80" placeholder="Enter your name" required></label>
-            <label for="participant-password">Password <span class="muted">(optional)</span><input id="participant-password" type="password" autocomplete="current-password" maxlength="128" placeholder="Leave blank if not set"></label></div>
-            <button id="access-response" class="secondary" type="submit">Start / edit response</button>
-            <p class="help">Set an optional password the first time you use a name. Return with the same name and password to edit. Without a password, anyone using that name can edit.</p>
+            <label for="participant-password">Password <span class="muted">(optional)</span><input id="participant-password" type="password" autocomplete="current-password" maxlength="128" placeholder="Leave blank if not set"></label>
+            <button id="access-response" class="secondary" type="submit">Start / edit response</button></div>
           </form>
           <div id="signed-in" class="signed-in" hidden><span id="current-name"></span><button id="change-name" type="button" class="text-button">Change name</button></div>
-          <p class="help grid-instructions">Choose how to mark cells, then tap, drag, or press Space on a cell.</p>
-          <div class="answer-tools" role="group" aria-label="Mark cells as"><button type="button" data-answer="available" aria-pressed="true">✓ Available</button><button type="button" data-answer="unavailable" aria-pressed="false">× Not available</button><button type="button" data-answer="unanswered" aria-pressed="false">? Clear answer</button></div>
+          <div class="answer-controls"><p class="help grid-instructions">Choose how to mark cells, then tap or drag:</p>
+          <div class="answer-tools" role="group" aria-label="Mark cells as"><button type="button" data-answer="available" aria-pressed="true">✓ Available</button><button type="button" data-answer="unavailable" aria-pressed="false">× Not available</button><button type="button" data-answer="unanswered" aria-pressed="false">? Clear answer</button></div></div>
           <div class="legend"><span><i class="swatch selected" aria-hidden="true">✓</i>Available</span><span><i class="swatch unavailable" aria-hidden="true">×</i>Not available</span><span><i class="swatch unanswered" aria-hidden="true">?</i>Not answered yet</span></div>
           <div id="own-grid" class="grid-wrap"></div>
           <div class="save-bar"><span id="selection-count" class="muted"></span><button id="save-response" class="primary" type="button">Save availability</button></div>
-          <p class="help">Only cells you explicitly mark get an answer. Untouched cells stay unanswered when you save. Use Clear answer to return a cell to “Not answered yet.”</p>
         </section>
         <section class="card group-card">
-          <div class="panel-title"><span class="step">2</span><div><h2>Group availability</h2><p id="group-summary">No responses yet.</p></div></div>
+          <div class="panel-title"><span class="step">2</span><div><h2>Group availability</h2></div></div>
           <div class="group-legend"><span>Fewer available</span><div class="heat-scale"></div><span>More</span></div>
-          <p class="help">Numbers count people available for that time. “?” means nobody has answered that cell yet. Select a cell to see each person’s answers.</p>
           <div id="group-grid" class="grid-wrap"></div>
           <div id="slot-detail" class="slot-detail" aria-live="polite">Select a time to see who is available.</div>
           <div id="participant-list" class="participant-list"></div>

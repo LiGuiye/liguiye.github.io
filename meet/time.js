@@ -40,18 +40,18 @@ export function makeCandidates(dates, start, end, zone, slotMinutes = 15) {
   return result;
 }
 
-export function gridModel(slots, zone, slotMinutes = 15) {
+export function gridModel(slots, zone) {
   const days = new Map(), rowLabels = new Map();
   for (const slot of [...slots].sort((a, b) => a.startUtc.localeCompare(b.startUtc))) {
     const time = DateTime.fromISO(slot.startUtc, { zone }), until = DateTime.fromISO(slot.endUtc, { zone });
     const date = time.toISODate(), startClock = time.toFormat('HH:mm'), clock = `${startClock}:${until.toFormat('HH:mm')}`;
-    if (!days.has(date)) days.set(date, { date, label: time.toFormat('ccc'), sublabel: time.toFormat('LLL d'), cells: new Map(), occurrences: new Map() });
+    if (!days.has(date)) days.set(date, { date, week: time.startOf('week').toISODate(), label: time.toFormat('ccc'), sublabel: time.toFormat('LLL d'), cells: new Map(), occurrences: new Map() });
     const day = days.get(date), count = day.occurrences.get(startClock) ?? 0;
     day.occurrences.set(startClock, count + 1);
     const key = `${clock}:${count}`;
     day.cells.set(key, { ...slot, time, label: `${time.toFormat('cccc, LLL d, yyyy · h:mm a ZZZZ')} – ${until.toFormat('h:mm a ZZZZ')}` });
     const format = time.offset !== until.offset ? 'h:mm a ZZZZ' : 'h:mm a';
-    rowLabels.set(key, `${time.toFormat(format)}${slotMinutes > 15 ? `–${until.toFormat(format)}` : ''}${count ? ' (repeat)' : ''}`);
+    rowLabels.set(key, `${time.toFormat(format)}${count ? ' (repeat)' : ''}`);
   }
   return {
     days: [...days.values()].sort((a, b) => a.date.localeCompare(b.date)),
