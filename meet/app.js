@@ -1,6 +1,6 @@
 import { request, privateLink } from './api.js';
 import { DateTime, makeCandidates, gridModel, editorDefaults } from './time.js';
-import { availabilityStatus, statusLabels } from './availability.js';
+import { availabilityStatus, savedResponses, statusLabels } from './availability.js';
 
 const $ = selector => document.querySelector(selector);
 const fragment = new URLSearchParams(location.hash.slice(1));
@@ -361,9 +361,9 @@ function renderEventGrids() {
       draft.touched.add(slot.id);
       dirty = true;
     } });
-  const responses = state.participants.map(person => new Map(state.availability.filter(answer => answer.participantId === person.id).map(answer => [answer.slotId, answer.available])));
-  renderGrid($('#group-grid'), state.slots, zone, { responses, detail: showDetail });
-  $('#participant-list').replaceChildren(...state.participants.map(person => element('span', 'name-chip', `${person.name}${person.passwordProtected ? ' 🔒' : ''}`)));
+  const responses = savedResponses(state.participants, state.availability);
+  renderGrid($('#group-grid'), state.slots, zone, { responses: responses.map(({ answers }) => answers), detail: showDetail });
+  $('#participant-list').replaceChildren(...responses.map(({ person }) => element('span', 'name-chip', `${person.name}${person.passwordProtected ? ' 🔒' : ''}`)));
   selectionCount(); disableOwn(busy || !identity);
 }
 function selectionCount() {
@@ -377,12 +377,12 @@ function disableOwn(disabled) {
 }
 function showDetail(slot) {
   const detail = $('#slot-detail'); detail.replaceChildren(element('strong', '', slot.label));
-  const responses = state.participants.map(person => ({ person, answers: new Map(state.availability.filter(answer => answer.participantId === person.id).map(answer => [answer.slotId, answer.available])) }));
+  const responses = savedResponses(state.participants, state.availability);
   for (const [status, label] of Object.entries(statusLabels)) {
     const people = responses.filter(({ answers }) => availabilityStatus(slot, answers) === status);
     if (people.length) detail.append(element('p', '', `${label}: ${people.map(({ person }) => person.name).join(', ')}`));
   }
-  if (!state.participants.length) detail.append(element('p', '', 'No responses yet.'));
+  if (!responses.length) detail.append(element('p', '', 'No responses yet.'));
 }
 async function refresh(review = false) {
   if (!state || refreshing || busy) return;

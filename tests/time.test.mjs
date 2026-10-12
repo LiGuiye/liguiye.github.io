@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { makeCandidates, gridModel, editorDefaults } from '../meet/time.js';
-import { availabilityStatus } from '../meet/availability.js';
+import { availabilityStatus, savedResponses } from '../meet/availability.js';
 
 test('dated slots use exact UTC instants in the event timezone', () => {
   const slots = makeCandidates(['2026-10-12'], '09:00', '10:00', 'America/Denver');
@@ -90,6 +90,19 @@ test('explicit false answers differ from unanswered cells and can be cleared', (
   assert.equal(availabilityStatus(slots[1], answers), 'available');
   answers.delete('a');
   assert.equal(availabilityStatus(slots[0], answers), 'unanswered');
+});
+
+test('group view omits empty responses but retains explicit unavailable answers', () => {
+  const participants = [{ id: 'empty' }, { id: 'busy' }, { id: 'free' }];
+  const availability = [
+    { participantId: 'busy', slotId: 'a', available: false },
+    { participantId: 'free', slotId: 'b', available: true }
+  ];
+  const responses = savedResponses(participants, availability);
+  assert.deepEqual(responses.map(({ person }) => person.id), ['busy', 'free']);
+  assert.equal(availabilityStatus({ id: 'a' }, responses[0].answers), 'unavailable');
+  assert.equal(availabilityStatus({ id: 'b' }, responses[0].answers), 'unanswered');
+  assert.deepEqual(savedResponses(participants, []), []);
 });
 
 test('sparse dates are grouped by calendar week, including year boundaries', () => {
